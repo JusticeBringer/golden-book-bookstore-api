@@ -28,6 +28,7 @@ if (NODE_ENV === 'production') {
 if (NODE_ENV !== 'production') {
   (async () => {
     try {
+      console.log('Resetting mocked data...');
       await resetMockedData();
     } catch (e) {
       console.error(e);
