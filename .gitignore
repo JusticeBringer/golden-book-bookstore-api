@@ -48,3 +48,10 @@ Thumbs.db
 *.mov
 *.wmv
 
+# .env files
+*.env
+*.env.development
+*.env.production
+
+# vs code
+*.vscode
