@@ -4,7 +4,9 @@
   "description": "Backend libraria Cartea de Aur",
   "main": "server.ts",
   "scripts": {
-    "start": "ts-node-dev -r dotenv/config ./server.ts"
+    "start": "ts-node-dev -r dotenv/config ./server.ts",
+    "build": "tsc",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",

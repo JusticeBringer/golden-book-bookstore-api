@@ -1,58 +1,38 @@
-import { MongoClient } from 'mongodb';
-import { dotEnvConfig } from '../dotenv/config';
+import mongoose from 'mongoose';
+import dotEnvConfig from '../dotenv/config';
 
 const MONGODB_URI = dotEnvConfig.MONGODB_URI as string;
-const MONGODB_DB = dotEnvConfig.MONGODB_DB as string;
-
-if (!MONGODB_DB) {
-  throw new Error('Please define the MONGODB_DB environment variable inside .env');
-}
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env');
+  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
 }
 
-export interface Global extends NodeJS.Global {
-  document: Document;
-  window: Window;
-  mongo: any;
-}
-
-declare let global: Global;
-
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached = global.mongo;
-
-if (!cached) {
-  cached = global.mongo = { conn: null, promise: null };
-}
-
-export async function dbDevConnect() {
-  if (cached.conn) {
-    console.log('Existing connection, connected to database');
-    return cached.conn;
+let database: mongoose.Connection;
+export const dbDevConnect = () => {
+  if (database) {
+    return;
   }
-
-  if (!cached.promise) {
+  mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useFindAndModify: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  });
+  database = mongoose.connection;
+  database.once('open', async () => {
     console.log('Connected to development database');
-    const opts = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    };
+  });
+  database.on('error', () => {
+    console.log('Error connecting to development database');
+  });
+};
 
-    cached.promise = MongoClient.connect(MONGODB_URI, opts)
-      .then(client => {
-        return {
-          client,
-          db: client.db(MONGODB_DB)
-        };
-      })
-      .catch(error => console.error(error));
+export const disconnect = () => {
+  if (!database) {
+    console.log('Development database was not connected. Disconnecting nothing.');
+    return;
   }
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
+
+  console.log('Disonnected from development database');
+  mongoose.disconnect();
+};
