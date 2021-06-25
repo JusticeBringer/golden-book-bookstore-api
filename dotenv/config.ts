@@ -6,7 +6,8 @@ export const dotEnvConfig = {
   MONGODB_URI: process.env.MONGODB_URI,
   API_KEY: process.env.API_KEY,
   NODE_ENV: process.env.NODE_ENV,
-  PORT: process.env.PORT
+  PORT: process.env.PORT,
+  RESET_MOCKED_DATA: process.env.RESET_MOCKED_DATA
 };
 
 export default dotEnvConfig;

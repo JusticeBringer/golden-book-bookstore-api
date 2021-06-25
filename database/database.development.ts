@@ -4,7 +4,7 @@ import dotEnvConfig from '../dotenv/config';
 const MONGODB_URI = dotEnvConfig.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  throw new Error('Please define the MONGODB_URI environment variable inside .env file');
 }
 
 let database: mongoose.Connection;

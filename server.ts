@@ -7,8 +7,9 @@ import resetMockedData from './scripts/resetMockedData';
 
 const app: Application = express();
 
-const NODE_ENV = dotEnvConfig.NODE_ENV;
 const PORT = dotEnvConfig.PORT || 3000;
+const NODE_ENV = dotEnvConfig.NODE_ENV || 'development';
+const RESET_MOCKED_DATA = dotEnvConfig.RESET_MOCKED_DATA || 'false';
 
 // Body parsing Middleware
 app.use(express.json());
@@ -26,14 +27,16 @@ if (NODE_ENV === 'production') {
 
 // Reset mocked data for development
 if (NODE_ENV !== 'production') {
-  (async () => {
-    try {
-      console.log('Resetting mocked data...');
-      await resetMockedData();
-    } catch (e) {
-      console.error(e);
-    }
-  })();
+  if (RESET_MOCKED_DATA === 'true') {
+    (async () => {
+      try {
+        console.log('Resetting mocked data...');
+        await resetMockedData();
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }
 }
 
 try {
