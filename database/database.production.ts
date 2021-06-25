@@ -23,16 +23,16 @@ export const dbProdConnect = () => {
     console.log('Connected to production database');
   });
   database.on('error', () => {
-    console.log('Error connecting to database');
+    console.log('Error connecting to production database');
   });
 };
 
 export const disconnect = () => {
   if (!database) {
-    console.log('Database was not connected. Disconnecting nothing.');
+    console.log('Production database was not connected. Disconnecting nothing.');
     return;
   }
 
-  console.log('Disonnected to database');
+  console.log('Disonnected from production database');
   mongoose.disconnect();
 };
