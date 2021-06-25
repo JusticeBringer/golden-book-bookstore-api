@@ -1,10 +1,10 @@
 import express, { Router, Request, Response } from 'express';
 import { getAllBooks } from '../../../../../database/services/book.service';
-import { verifyToken } from '../../../../../util/validation/validation';
+import { verifyTokenSecret } from '../../../../../util/validation/validation';
 
 export const booksRouter: Router = express.Router();
 
-booksRouter.get('/', verifyToken, async (req: Request, res: Response): Promise<void> => {
+booksRouter.get('/', verifyTokenSecret, async (req: Request, res: Response): Promise<void> => {
   const { result, errorRet } = await getAllBooks();
   if (!errorRet) {
     res.status(200).json(result);

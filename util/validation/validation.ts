@@ -41,7 +41,20 @@ export const createJwtToken = (userId: string) => {
   return jwt.sign({ _id: userId }, dotEnvConfig.SECRET_JWT_TOKEN);
 };
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyTokenSecret = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).send('Access Denied');
+  }
+
+  if (token === dotEnvConfig.SECRET_JWT_TOKEN) {
+    next();
+  } else {
+    return res.status(400).send('No token provided. Access denied');
+  }
+};
+
+export const verifyTokenUser = (req: Request, res: Response, next: NextFunction) => {
   const token = req.header('auth-token');
   if (!token) {
     return res.status(401).send('Access Denied');

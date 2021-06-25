@@ -13,7 +13,44 @@ import {
 
 export const authRouter: Router = express.Router();
 
-authRouter.post('/register', async (req: Request, res: Response): Promise<any> => {
+authRouter.post('/register/email', async (req: Request, res: Response): Promise<any> => {
+  const userForValidation: IUserInput = {
+    email: req.body.email,
+    password: req.body.password
+  };
+
+  // validating data
+  const { error } = registerValidation(userForValidation);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
+  // check if user is already in database
+  const emailExists = await emailValidation(userForValidation.email);
+  if (emailExists) {
+    return res.status(400).send('Email-ul este deja utilizat');
+  }
+
+  // hash password
+  const hashedPassword = await hashPassword(userForValidation.password);
+
+  const userForModel: IUser = {
+    email: userForValidation.email,
+    password: hashedPassword,
+    isVerifiedEmail: false,
+    registrationMethod: 'email'
+  };
+  const userModel = new UserModel(userForModel);
+
+  try {
+    const savedUser = await userModel.save();
+    res.send({ user: savedUser._id });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+authRouter.post('/register/google', async (req: Request, res: Response): Promise<any> => {
   const userForValidation: IUserInput = {
     email: req.body.email,
     password: req.body.password
