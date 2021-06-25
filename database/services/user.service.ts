@@ -1,4 +1,4 @@
-import { CreateQuery, FilterQuery, QueryOptions } from 'mongoose';
+import { CreateQuery, FilterQuery } from 'mongoose';
 import { UserDocument, UserInput } from '../models/user/user.interface';
 import Users from '../models/user/user.model';
 
@@ -9,10 +9,7 @@ export async function createUser(input: CreateQuery<UserInput>) {
   return Users.create<UserInput>(input);
 }
 
-export async function findUser(
-  query: FilterQuery<UserDocument>,
-  options: QueryOptions = { lean: true }
-) {
+export async function findUser(query: FilterQuery<UserDocument>, options: any = { lean: true }) {
   return Users.findOne(query, null, options);
 }
 
