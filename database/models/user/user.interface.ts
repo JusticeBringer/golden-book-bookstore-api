@@ -10,6 +10,7 @@ export interface IUser {
   email: string;
   password: string;
   isVerifiedEmail: boolean;
+  registrationMethod: string;
   familyName?: string;
   givenName?: string;
   phoneNumber?: string;
@@ -18,11 +19,9 @@ export interface IUser {
   lastSeenAt?: Date;
 }
 
-interface IUserInput {
+export interface IUserInput {
   email: IUser['email'];
   password: IUser['password'];
 }
 
-export interface UserInput extends IUserInput {}
 export interface UserDocument extends IUser, Document {}
-export default UserDocument;

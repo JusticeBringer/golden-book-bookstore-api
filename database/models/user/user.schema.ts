@@ -5,7 +5,9 @@ export const UserSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      min: 6,
+      max: 255
     },
     isVerifiedEmail: {
       type: Boolean,
@@ -13,7 +15,9 @@ export const UserSchema: Schema = new Schema(
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      min: 6,
+      max: 1024
     },
     familyName: {
       type: String,
@@ -65,6 +69,11 @@ export const UserSchema: Schema = new Schema(
       type: Date,
       default: new Date(),
       required: false
+    },
+    registrationMethod: {
+      type: String,
+      enum: ['google', 'facebook', 'email'],
+      required: true
     }
   },
   {

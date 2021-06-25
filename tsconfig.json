@@ -19,7 +19,11 @@
     "target": "esnext",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./",
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types",
+    ],
   },
   "exclude": ["node_modules", ".vscode"],
 }
