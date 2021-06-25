@@ -1,0 +1,12 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: node:10.15.3
+
+pipelines:
+  default:
+      - step:
+         script: 
+           - git push https://heroku:8a8a06c1-9e18-4574-9730-21573d8cd7cc@git.heroku.com/oasteadomnului-librarie-api.git HEAD
