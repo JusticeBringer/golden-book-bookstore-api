@@ -94,8 +94,13 @@ export const sendConfirmationEmail = async (userId: string, userEmail: string) =
   const VALIDATION_EMAIL = dotEnvConfig.VALIDATION_EMAIL;
   const MAILGUN_PRIVATE_API_KEY = dotEnvConfig.MAILGUN_PRIVATE_API_KEY;
   const MAILGUN_DOMAIN_NAME = dotEnvConfig.MAILGUN_DOMAIN_NAME;
+  const MAILGUN_HOST = dotEnvConfig.MAILGUN_HOST;
 
-  let mg = new mailgun({ apiKey: MAILGUN_PRIVATE_API_KEY, domain: MAILGUN_DOMAIN_NAME });
+  let mg = new mailgun({
+    apiKey: MAILGUN_PRIVATE_API_KEY,
+    domain: MAILGUN_DOMAIN_NAME,
+    host: MAILGUN_HOST
+  });
 
   const emailToken = jwt.sign(
     {
