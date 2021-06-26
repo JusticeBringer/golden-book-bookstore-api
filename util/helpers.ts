@@ -15,11 +15,21 @@ export const trimTitle = (title: string): string => {
   return newTitle;
 };
 
-const OneDay = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
-
 export const isDatePastoneDayAgo = (givenDate: Date) => {
-  const numberGivenDate = givenDate.valueOf();
-  if (Date.now() - numberGivenDate > OneDay) {
+  const toDateGivenDate = new Date(givenDate);
+  const dateNow = new Date(Date.now());
+
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(
+    toDateGivenDate.getFullYear(),
+    toDateGivenDate.getMonth(),
+    toDateGivenDate.getDate()
+  );
+  const utc2 = Date.UTC(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate());
+
+  if (Math.floor((utc2 - utc1) / _MS_PER_DAY) >= 1) {
     return true;
   }
   return false;
