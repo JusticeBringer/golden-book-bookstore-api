@@ -9,15 +9,23 @@ export const UserSchema: Schema = new Schema(
       min: 6,
       max: 255
     },
-    isVerifiedEmail: {
-      type: Boolean,
-      required: true
-    },
     password: {
       type: String,
       required: true,
       min: 6,
       max: 1024
+    },
+    isVerifiedEmail: {
+      type: Boolean,
+      required: true
+    },
+    confirmationEmailDateSent: {
+      type: Number,
+      required: true
+    },
+    confirmationEmailDateClicked: {
+      type: Number,
+      required: true
     },
     familyName: {
       type: String,

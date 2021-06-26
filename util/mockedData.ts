@@ -6,13 +6,17 @@ export const getUsers: IUser[] = [
     email: 'first@gmail.com',
     isVerifiedEmail: true,
     password: 'randomHash',
-    registrationMethod: 'email'
+    registrationMethod: 'email',
+    confirmationEmailDateSent: 0,
+    confirmationEmailDateClicked: 0
   },
   {
     email: 'second@gmail.com',
     isVerifiedEmail: false,
     password: 'randomHash2',
-    registrationMethod: 'email'
+    registrationMethod: 'email',
+    confirmationEmailDateSent: 0,
+    confirmationEmailDateClicked: 0
   }
 ];
 

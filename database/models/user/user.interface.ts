@@ -6,10 +6,17 @@ type shippingAddressType = {
   zipCode: string;
 };
 
+// type confirmationEmailType = {
+//   dateSent: number;
+//   dateClicked: number;
+// };
+
 export interface IUser {
   email: string;
   password: string;
   isVerifiedEmail: boolean;
+  confirmationEmailDateSent: number;
+  confirmationEmailDateClicked: number;
   registrationMethod: string;
   familyName?: string;
   givenName?: string;
@@ -22,6 +29,10 @@ export interface IUser {
 export interface IUserInput {
   email: IUser['email'];
   password: IUser['password'];
+}
+
+export interface IGoogleUserInput {
+  email: string;
 }
 
 export interface UserDocument extends IUser, Document {}

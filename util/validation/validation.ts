@@ -95,37 +95,39 @@ export const sendConfirmationEmail = async (userId: string, userEmail: string) =
   const MAILGUN_PRIVATE_API_KEY = dotEnvConfig.MAILGUN_PRIVATE_API_KEY;
   const MAILGUN_DOMAIN_NAME = dotEnvConfig.MAILGUN_DOMAIN_NAME;
 
-  console.log('Sending email confirmation...');
-
   let mg = new mailgun({ apiKey: MAILGUN_PRIVATE_API_KEY, domain: MAILGUN_DOMAIN_NAME });
 
-  jwt.sign(
+  const emailToken = jwt.sign(
     {
       userId: userId
     },
     VALIDATION_EMAIL_SECRET,
     {
       expiresIn: '1d'
-    },
-    (error, emailToken) => {
-      const confirmationUrl =
-        SERVER_DOMAIN_URL + `/api/v0/user/register/confirmation/${emailToken}`;
-
-      let data = {
-        from: `Cartea de Aur <${VALIDATION_EMAIL}>`,
-        to: userEmail,
-        subject: 'Email confirmation',
-        html: `Vă rugăm accesați următorul link pentru confirmarea email-ului: <a href="${confirmationUrl}">${confirmationUrl} </a>`
-      };
-
-      mg.messages().send(data, function (err, body) {
-        if (err) {
-          throw new Error(err);
-        } else {
-          console.log('sent email confirmation.');
-          console.log({ body });
-        }
-      });
     }
   );
+
+  const confirmationUrl = SERVER_DOMAIN_URL + `/api/v0/user/register/confirmation/${emailToken}`;
+
+  let data = {
+    from: `Cartea de Aur ${VALIDATION_EMAIL}`,
+    to: userEmail,
+    subject: 'Email confirmation',
+    html: `Vă rugăm accesați următorul link pentru confirmarea email-ului: <a href="${confirmationUrl}">${confirmationUrl} </a>`
+  };
+
+  let errorMail = '';
+  await mg
+    .messages()
+    .send(data)
+    .then(() => {})
+    .catch((error: any) => {
+      errorMail = error;
+    });
+
+  if (errorMail) {
+    throw new Error(errorMail);
+  } else {
+    return '';
+  }
 };

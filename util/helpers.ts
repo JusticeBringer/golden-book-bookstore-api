@@ -14,3 +14,12 @@ export const trimTitle = (title: string): string => {
 
   return newTitle;
 };
+
+const OneDay = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
+
+export const isDatePastoneDayAgo = (givenDate: number) => {
+  if (Date.now() - givenDate > OneDay) {
+    return true;
+  }
+  return false;
+};
