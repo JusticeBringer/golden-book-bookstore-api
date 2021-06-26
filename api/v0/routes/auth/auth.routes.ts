@@ -118,24 +118,21 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
         );
     } else {
       // resend email
-      await sendConfirmationEmail(user._id, user.email)
-        .then(() => {
-          userModel.confirmationEmailDateSent = new Date();
-        })
-        .catch(() => {
-          return res
-            .status(400)
-            .send(
-              'Nu s-a putut trimite email de confirmare. Vă rugăm reîncercați mai târziu sau folosiți altă adresă de email.'
-            );
-        });
+      const errorMail = await sendConfirmationEmail(user._id, user.email);
+      if (errorMail) {
+        return res
+          .status(400)
+          .send(
+            'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
+          );
+      }
 
       // update in db
       await UserModel.updateOne(
         { _id: user._id },
         { $set: { confirmationEmailDateSent: Date.now() } }
       ).catch(error => {
-        return res.status(400).send(error);
+        return res.status(400).send({ error: error });
       });
 
       return res.status(200).send('A fost trimis un alt email de confirmare');
@@ -158,7 +155,7 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
 
   const errorMail = await sendConfirmationEmail(userModel._id, userForValidation.email);
   if (errorMail) {
-    res
+    return res
       .status(400)
       .send(
         'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
