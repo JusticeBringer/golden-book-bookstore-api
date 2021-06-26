@@ -2,8 +2,22 @@ import { IUser } from '../database/models/user/user.interface';
 import { IBook } from '../database/models/book/book.interface';
 
 export const getUsers: IUser[] = [
-  { email: 'first@gmail.com', isVerifiedEmail: true, password: 'randomHash' },
-  { email: 'second@gmail.com', isVerifiedEmail: false, password: 'randomHash2' }
+  {
+    email: 'first@gmail.com',
+    isVerifiedEmail: true,
+    password: 'randomHash',
+    registrationMethod: 'email',
+    confirmationEmailDateSent: 0,
+    confirmationEmailDateClicked: 0
+  },
+  {
+    email: 'second@gmail.com',
+    isVerifiedEmail: false,
+    password: 'randomHash2',
+    registrationMethod: 'email',
+    confirmationEmailDateSent: 0,
+    confirmationEmailDateClicked: 0
+  }
 ];
 
 const PR_IOSIF_TRIFA = 'Pr. Iosif Trifa';
