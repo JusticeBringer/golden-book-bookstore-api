@@ -17,8 +17,9 @@ export const trimTitle = (title: string): string => {
 
 const OneDay = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
 
-export const isDatePastoneDayAgo = (givenDate: number) => {
-  if (Date.now() - givenDate > OneDay) {
+export const isDatePastoneDayAgo = (givenDate: Date) => {
+  const numberGivenDate = givenDate.valueOf();
+  if (Date.now() - numberGivenDate > OneDay) {
     return true;
   }
   return false;

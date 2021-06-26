@@ -5,7 +5,7 @@ import { UserModel } from '../../database/models/user/user.model';
 import { IUser, IUserInput } from '../../database/models/user/user.interface';
 import { Request, Response, NextFunction } from 'express';
 import { dotEnvConfig } from '../../dotenv/config';
-import mailgun from 'mailgun-js';
+import { NodeMailgun } from 'ts-mailgun';
 
 export const registerValidation = (data: any) => {
   const schema = Joi.object<IUserInput>({
@@ -88,19 +88,12 @@ export const verifyTokenUser = (req: Request, res: Response, next: NextFunction)
   }
 };
 
-export const sendConfirmationEmail = async (userId: string, userEmail: string) => {
+export async function sendConfirmationEmail(userId: string, userEmail: string) {
   const VALIDATION_EMAIL_SECRET = dotEnvConfig.VALIDATION_EMAIL_SECRET;
   const SERVER_DOMAIN_URL = dotEnvConfig.SERVER_DOMAIN_URL;
-  const VALIDATION_EMAIL = dotEnvConfig.VALIDATION_EMAIL;
-  const MAILGUN_PRIVATE_API_KEY = dotEnvConfig.MAILGUN_PRIVATE_API_KEY;
-  const MAILGUN_DOMAIN_NAME = dotEnvConfig.MAILGUN_DOMAIN_NAME;
-  const MAILGUN_HOST = dotEnvConfig.MAILGUN_HOST;
-
-  let mg = new mailgun({
-    apiKey: MAILGUN_PRIVATE_API_KEY,
-    domain: MAILGUN_DOMAIN_NAME,
-    host: MAILGUN_HOST
-  });
+  const MAILGUN_PRIVATE_API_KEY = dotEnvConfig.MAILGUN_PRIVATE_API_KEY as string;
+  const MAILGUN_DOMAIN_NAME = dotEnvConfig.MAILGUN_DOMAIN_NAME as string;
+  const MAILGUN_HOST = dotEnvConfig.MAILGUN_HOST as string;
 
   const emailToken = jwt.sign(
     {
@@ -114,25 +107,28 @@ export const sendConfirmationEmail = async (userId: string, userEmail: string) =
 
   const confirmationUrl = SERVER_DOMAIN_URL + `/api/v0/user/register/confirmation/${emailToken}`;
 
-  let data = {
-    from: `Cartea de Aur ${VALIDATION_EMAIL}`,
-    to: userEmail,
+  const data = {
     subject: 'Email confirmation',
     html: `Vă rugăm accesați următorul link pentru confirmarea email-ului: <a href="${confirmationUrl}">${confirmationUrl} </a>`
   };
 
+  const mailer = new NodeMailgun();
+  mailer.apiKey = MAILGUN_PRIVATE_API_KEY;
+  mailer.domain = MAILGUN_DOMAIN_NAME;
+  mailer.options = {
+    host: MAILGUN_HOST
+  };
+  mailer.fromEmail = 'noreply@carteadeaur.games';
+  mailer.fromTitle = 'Libraria Cartea de Aur';
+  mailer.init();
+
   let errorMail = '';
-  await mg
-    .messages()
-    .send(data)
+  await mailer
+    .send(userEmail, data.subject, data.html)
     .then(() => {})
     .catch((error: any) => {
-      errorMail = error;
+      errorMail = error.message;
     });
 
-  if (errorMail) {
-    throw new Error(errorMail);
-  } else {
-    return '';
-  }
-};
+  return errorMail;
+}

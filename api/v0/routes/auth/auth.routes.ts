@@ -69,7 +69,7 @@ authRouter.get(
       }
     );
     return res.send(
-      `<body onload=window.location.replace='${loginUrl}'>
+      `<body onload=window.location.href='${loginUrl}'>
         <div style="padding: 5vw">
           <p style="font-size:5vw;margin-top:2vh"> Email confirmat.</p> 
         <div style="font-size:4vw;margin-top:2vh">
@@ -82,8 +82,6 @@ authRouter.get(
 );
 
 authRouter.post('/register/email', async (req: Request, res: Response): Promise<any> => {
-  const NODE_ENV = dotEnvConfig.NODE_ENV;
-
   const userFromReqBody = req.body.user;
 
   const userForValidation: IUserInput = {
@@ -120,21 +118,17 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
         );
     } else {
       // resend email
-      if (NODE_ENV === 'production') {
-        await sendConfirmationEmail(user._id, user.email)
-          .then(() => {
-            userModel.confirmationEmailDateSent = Date.now();
-          })
-          .catch(() => {
-            return res
-              .status(400)
-              .send(
-                'Nu s-a putut trimite email de confirmare. Vă rugăm reîncercați mai târziu sau folosiți altă adresă de email.'
-              );
-          });
-      } else {
-        user.confirmationEmailDateSent = Date.now();
-      }
+      await sendConfirmationEmail(user._id, user.email)
+        .then(() => {
+          userModel.confirmationEmailDateSent = new Date();
+        })
+        .catch(() => {
+          return res
+            .status(400)
+            .send(
+              'Nu s-a putut trimite email de confirmare. Vă rugăm reîncercați mai târziu sau folosiți altă adresă de email.'
+            );
+        });
 
       // update in db
       await UserModel.updateOne(
@@ -156,31 +150,28 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
     password: hashedPassword,
     isVerifiedEmail: false,
     registrationMethod: 'email',
-    confirmationEmailDateSent: 0,
-    confirmationEmailDateClicked: 0
+    confirmationEmailDateSent: new Date(),
+    confirmationEmailDateClicked: new Date()
   };
 
   let userModel: UserDocument = new UserModel(userForModel);
-  if (NODE_ENV === 'production') {
-    await sendConfirmationEmail(userModel._id, userForValidation.email)
-      .then(() => {
-        userModel.confirmationEmailDateSent = Date.now();
-      })
-      .catch(() => {
-        return res
-          .status(400)
-          .send(
-            'Nu s-a putut trimite email de confirmare. Vă rugăm reîncercați mai târziu sau folosiți altă adresă de email.'
-          );
-      });
-  } else {
-    userModel.confirmationEmailDateSent = Date.now();
+
+  const errorMail = await sendConfirmationEmail(userModel._id, userForValidation.email);
+  if (errorMail) {
+    res
+      .status(400)
+      .send(
+        'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
+      );
   }
+
+  // else, everything worked good
+  userModel.confirmationEmailDateSent = new Date();
 
   await userModel
     .save()
-    .then((body: UserDocument) => {
-      return res.status(200).send({ userId: body._id });
+    .then((user: UserDocument) => {
+      return res.status(200).send({ userId: user._id });
     })
     .catch((error: any) => {
       return res.status(400).send(error);
@@ -208,8 +199,8 @@ authRouter.post('/register/google', async (req: Request, res: Response): Promise
     password: hashedPassword,
     isVerifiedEmail: true,
     registrationMethod: 'google',
-    confirmationEmailDateSent: Date.now(),
-    confirmationEmailDateClicked: Date.now()
+    confirmationEmailDateSent: new Date(),
+    confirmationEmailDateClicked: new Date()
   };
   const userModel = new UserModel(userForModel);
 

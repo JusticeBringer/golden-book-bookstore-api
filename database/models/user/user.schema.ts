@@ -20,11 +20,11 @@ export const UserSchema: Schema = new Schema(
       required: true
     },
     confirmationEmailDateSent: {
-      type: Number,
+      type: Date,
       required: true
     },
     confirmationEmailDateClicked: {
-      type: Number,
+      type: Date,
       required: true
     },
     familyName: {
