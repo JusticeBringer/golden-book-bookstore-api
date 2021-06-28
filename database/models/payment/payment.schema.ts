@@ -3,11 +3,7 @@ import { Schema } from 'mongoose';
 export const PaymentSchema = new Schema(
   {
     userId: {
-      type: {
-        type: Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true
-      },
+      type: String,
       required: true
     },
     status: {

@@ -82,6 +82,7 @@ authRouter.get(
 );
 
 authRouter.post('/register/email', async (req: Request, res: Response): Promise<any> => {
+  console.log('req is: ', req);
   const userFromReqBody = req.body.user;
 
   const userForValidation: IUserInput = {
@@ -203,7 +204,10 @@ authRouter.post('/register/google', async (req: Request, res: Response): Promise
 
   try {
     const savedUser = await userModel.save();
-    res.send({ user: savedUser._id });
+
+    // create and assign a token
+    const token = createJwtToken(savedUser._id);
+    res.header('auth-token', token).send({ token: token, userId: savedUser._id });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -249,7 +253,7 @@ authRouter.post('/login', async (req: Request, res: Response): Promise<any> => {
 
   // create and assign a token
   const token = createJwtToken(user._id);
-  res.header('auth-token', token).send(token);
+  res.header('auth-token', token).send({ token: token, userId: user._id });
 });
 
 authRouter.post('/login/google', async (req: Request, res: Response): Promise<any> => {
@@ -279,7 +283,7 @@ authRouter.post('/login/google', async (req: Request, res: Response): Promise<an
 
   // create and assign a token
   const token = createJwtToken(user._id);
-  res.header('auth-token', token).send(token);
+  res.header('auth-token', token).send({ token: token, userId: user._id });
 });
 
 export default authRouter;
