@@ -3,26 +3,30 @@ import { Document } from 'mongoose';
 type shippingAddressType = {
   city: string;
   locality: string;
+  street: string;
   zipCode: string;
 };
 
-type itemsType = {
-  elementId: string;
-  quantity: number;
+type itemType = {
+  id: string;
+  qty: number;
 };
 
 export interface IOrder {
   userId: string;
-  paymentId: boolean;
-  status: string;
-  items: itemsType;
+  paymentId: string;
+  deliveryOption: string;
+  statusPayment: string;
+  statusDelivery: string;
+  items: itemType[];
   shippingAddress: shippingAddressType;
 }
 
 interface IOrderInput {
   userId: IOrder['userId'];
   paymentId: IOrder['paymentId'];
-  status: IOrder['status'];
+  statusPayment: IOrder['statusPayment'];
+  statusDelivery: IOrder['statusDelivery'];
   items: IOrder['items'];
   shippingAddress: IOrder['shippingAddress'];
 }

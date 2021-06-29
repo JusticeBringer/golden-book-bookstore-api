@@ -1,47 +1,37 @@
 import { Schema } from 'mongoose';
 
+const itemsSchema = new Schema({
+  id: {
+    type: String,
+    required: true
+  },
+  qty: {
+    type: Number,
+    required: true
+  }
+});
+
 export const OrderSchema = new Schema(
   {
     userId: {
-      type: {
-        type: Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true
-      },
+      type: String,
       required: true
     },
     paymentId: {
-      type: {
-        type: Schema.Types.ObjectId,
-        ref: 'Orders',
-        required: true
-      },
-      required: true
-    },
-    status: {
       type: String,
-      enum: ['Paid', 'Unpaid', 'Cancelled', 'Sent', 'Completed'],
       required: true
     },
-    items: [
-      {
-        type: {
-          bookId: {
-            type: {
-              type: Schema.Types.ObjectId,
-              ref: 'Books',
-              required: true
-            },
-            required: true
-          },
-          quantity: {
-            type: Number,
-            required: true
-          }
-        },
-        required: true
-      }
-    ],
+    statusPayment: {
+      type: String,
+      enum: ['Paid', 'Unpaid', 'Cancelled'],
+      required: true
+    },
+    statusDelivery: {
+      type: String,
+      enum: ['Cancelled', 'Sent', 'Completed', 'In store'],
+      required: true
+    },
+    items: [itemsSchema],
     shippingAddress: {
       type: {
         city: {
