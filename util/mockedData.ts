@@ -45,7 +45,7 @@ export const getBooksNew: IBook[] = [
     discount: 0,
     category: LITERATURA_OASTEI_DOMNULUI,
     publishingYear: 1998,
-    rating: 4.5,
+    rating: 5.0,
     reviews: ['41224d776a326fb40f000001', '41224d776a326fb40f000002']
   },
   {
@@ -81,7 +81,7 @@ export const getBooksNew: IBook[] = [
     discount: 20,
     category: LITERATURA_OASTEI_DOMNULUI,
     publishingYear: 1999,
-    rating: 4.5,
+    rating: 4.0,
     reviews: ['41224d776a326fb40f000005', '41224d776a326fb40f000006']
   },
   {

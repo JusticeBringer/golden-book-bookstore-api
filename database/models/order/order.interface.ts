@@ -16,7 +16,8 @@ export interface IOrder {
   userId: string;
   paymentId: string;
   deliveryOption: string;
-  status: string;
+  statusPayment: string;
+  statusDelivery: string;
   items: itemType[];
   shippingAddress: shippingAddressType;
 }
@@ -24,7 +25,8 @@ export interface IOrder {
 interface IOrderInput {
   userId: IOrder['userId'];
   paymentId: IOrder['paymentId'];
-  status: IOrder['status'];
+  statusPayment: IOrder['statusPayment'];
+  statusDelivery: IOrder['statusDelivery'];
   items: IOrder['items'];
   shippingAddress: IOrder['shippingAddress'];
 }
