@@ -153,14 +153,14 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
 
   let userModel: UserDocument = new UserModel(userForModel);
 
-  // const errorMail = await sendConfirmationEmail(userModel._id, userForValidation.email);
-  // if (errorMail) {
-  //   return res
-  //     .status(400)
-  //     .send(
-  //       'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
-  //     );
-  // }
+  const errorMail = await sendConfirmationEmail(userModel._id, userForValidation.email);
+  if (errorMail) {
+    return res
+      .status(400)
+      .send(
+        'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
+      );
+  }
 
   // else, everything worked good
 
