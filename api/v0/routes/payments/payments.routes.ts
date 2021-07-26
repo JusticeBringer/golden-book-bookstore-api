@@ -4,7 +4,7 @@ import { PaymentModel } from '../../../../database/models/payment/payment.model'
 
 export const paymentsRouter: Router = express.Router();
 
-paymentsRouter.post('/offline', async (req: Request, res: Response): Promise<void> => {
+paymentsRouter.post('/ramburs', async (req: Request, res: Response): Promise<void> => {
   console.log('req.body.payment is', req.body.payment);
 
   const payment: IPayment = req.body.payment;

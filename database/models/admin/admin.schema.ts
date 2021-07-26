@@ -7,10 +7,6 @@ export const AdminSchema: Schema = new Schema(
       required: true,
       unique: true
     },
-    isVerifiedEmail: {
-      type: Boolean,
-      required: true
-    },
     password: {
       type: String,
       required: true
@@ -25,7 +21,7 @@ export const AdminSchema: Schema = new Schema(
     },
     role: {
       type: String,
-      enum: ['Root', 'Admin', 'Viewer'],
+      enum: ['root', 'admin', 'viewer'],
       required: true
     }
   },

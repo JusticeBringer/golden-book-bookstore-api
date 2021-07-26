@@ -43,8 +43,8 @@ ordersRouter.post('/', async (req: Request, res: Response): Promise<void> => {
     userId: userId,
     paymentId: paymentId,
     deliveryOption: order.deliveryOption,
-    statusPayment: 'Unpaid',
-    statusDelivery: 'In store',
+    statusPayment: 'unpaid',
+    statusDelivery: 'inStore',
     items: order.items,
     shippingAddress: {
       city: order.personalData.city,
