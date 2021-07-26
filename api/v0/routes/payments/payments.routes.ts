@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from 'express';
-import { IPayment } from '../../../../database/models/payment/payment.interface';
+import { IPaymentOrder, IPayment } from '../../../../database/models/payment/payment.interface';
 import { PaymentModel } from '../../../../database/models/payment/payment.model';
 
 export const paymentsRouter: Router = express.Router();
@@ -7,7 +7,7 @@ export const paymentsRouter: Router = express.Router();
 paymentsRouter.post('/ramburs', async (req: Request, res: Response): Promise<void> => {
   console.log('req.body.payment is', req.body.payment);
 
-  const payment: IPayment = req.body.payment;
+  const payment: IPaymentOrder = req.body.payment;
 
   let parsedPaymentMethod = payment.paymentMethod as string;
   if (payment.paymentMethod === 'Poștă') {

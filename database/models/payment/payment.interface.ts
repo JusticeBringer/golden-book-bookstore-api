@@ -16,6 +16,10 @@ export interface IPayment {
   card?: cardType;
 }
 
+export interface IPaymentOrder extends IPayment {
+  deliveryOption: string;
+}
+
 interface IPaymentInput {
   userId: IPayment['userId'];
   status: IPayment['status'];
