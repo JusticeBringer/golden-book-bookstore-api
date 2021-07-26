@@ -25,7 +25,7 @@ export const UserSchema: Schema = new Schema(
     },
     confirmationEmailDateClicked: {
       type: Date,
-      required: true
+      required: false
     },
     familyName: {
       type: String,

@@ -111,7 +111,7 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
     let user: UserDocument = await UserModel.findOne({ email: userForValidation.email });
 
     // if confirmation email < 24 hours -> wait for 24 hours to finish
-    if (!isDatePastoneDayAgo(user.confirmationEmailDateSent)) {
+    if (!isDatePastoneDayAgo(user.confirmationEmailDateSent as Date)) {
       return res
         .status(400)
         .send(
@@ -148,23 +148,21 @@ authRouter.post('/register/email', async (req: Request, res: Response): Promise<
     password: hashedPassword,
     isVerifiedEmail: false,
     registrationMethod: 'email',
-    confirmationEmailDateSent: new Date(),
-    confirmationEmailDateClicked: new Date()
+    confirmationEmailDateSent: new Date()
   };
 
   let userModel: UserDocument = new UserModel(userForModel);
 
-  const errorMail = await sendConfirmationEmail(userModel._id, userForValidation.email);
-  if (errorMail) {
-    return res
-      .status(400)
-      .send(
-        'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
-      );
-  }
+  // const errorMail = await sendConfirmationEmail(userModel._id, userForValidation.email);
+  // if (errorMail) {
+  //   return res
+  //     .status(400)
+  //     .send(
+  //       'Nu s-a putut trimite email la adresa specificată. Încercați mai târziu sau folosiți o altă adresă de email.'
+  //     );
+  // }
 
   // else, everything worked good
-  userModel.confirmationEmailDateSent = new Date();
 
   await userModel
     .save()
@@ -213,7 +211,7 @@ authRouter.post('/register/google', async (req: Request, res: Response): Promise
   }
 });
 
-authRouter.post('/login', async (req: Request, res: Response): Promise<any> => {
+authRouter.post('/login/email', async (req: Request, res: Response): Promise<any> => {
   const userFromReqBody = req.body.user;
 
   const userForValidation: IUserInput = {

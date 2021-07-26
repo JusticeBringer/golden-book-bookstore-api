@@ -15,8 +15,8 @@ export interface IUser {
   email: string;
   password: string;
   isVerifiedEmail: boolean;
-  confirmationEmailDateSent: Date;
-  confirmationEmailDateClicked: Date;
+  confirmationEmailDateSent?: Date;
+  confirmationEmailDateClicked?: Date;
   registrationMethod: string;
   familyName?: string;
   givenName?: string;

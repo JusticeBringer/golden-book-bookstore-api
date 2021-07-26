@@ -16,6 +16,10 @@ export const trimTitle = (title: string): string => {
 };
 
 export const isDatePastoneDayAgo = (givenDate: Date) => {
+  if (!givenDate) {
+    return false;
+  }
+
   const toDateGivenDate = new Date(givenDate);
   const dateNow = new Date(Date.now());
 
