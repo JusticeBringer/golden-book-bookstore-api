@@ -7,10 +7,6 @@ export const AdminSchema: Schema = new Schema(
       required: true,
       unique: true
     },
-    isVerifiedEmail: {
-      type: Boolean,
-      required: true
-    },
     password: {
       type: String,
       required: true

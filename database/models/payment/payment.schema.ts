@@ -8,7 +8,7 @@ export const PaymentSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['Paid', 'Unpaid', 'Cancelled'],
+      enum: ['paid', 'unpaid', 'cancelled'],
       required: true
     },
     amount: {
@@ -17,7 +17,7 @@ export const PaymentSchema = new Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ['Card', 'Bank transfer', 'Ramburs', 'Post'],
+      enum: ['card', 'bankTransfer', 'ramburs', 'post'],
       required: true
     },
     token: {
