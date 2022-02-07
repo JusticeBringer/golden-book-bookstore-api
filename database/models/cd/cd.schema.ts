@@ -28,7 +28,7 @@ export const CdSchema = new Schema(
     },
     state: {
       type: String,
-      enum: ['New', 'Used'],
+      enum: ['new', 'used'],
       required: true
     },
     quantity: {

@@ -21,7 +21,7 @@ export const AdminSchema: Schema = new Schema(
     },
     role: {
       type: String,
-      enum: ['Root', 'Admin', 'Viewer'],
+      enum: ['root', 'admin', 'viewer'],
       required: true
     }
   },

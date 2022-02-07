@@ -32,6 +32,8 @@ ordersRouter.get('/:id', verifyTokenSecret, async (req: Request, res: Response):
 });
 
 ordersRouter.post('/', async (req: Request, res: Response): Promise<void> => {
+  console.log('req.body.order is', req.body);
+
   const userId = req.body.userId;
   const paymentId = req.body.paymentId;
   const order = req.body.form;
@@ -61,9 +63,11 @@ ordersRouter.post('/', async (req: Request, res: Response): Promise<void> => {
     // update books qtys
     await Promise.all(
       orderModel.items.map(async item => {
+        console.log('item', item);
         const bookById: BookDocument = await BookModel.findOne({ _id: item.id });
+        console.log('bookById', bookById);
         await BookModel.updateOne(
-          { _id: item.id },
+          { _id: item._id },
           { $set: { quantity: bookById.quantity - item.qty } }
         );
       })
@@ -71,6 +75,7 @@ ordersRouter.post('/', async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).send({ message: 'Comandă plasată cu succes!' });
   } catch (error) {
+    console.log('error', error);
     res.status(400).send({ erorr: error });
   }
 });

@@ -23,12 +23,17 @@ export const OrderSchema = new Schema(
     },
     statusPayment: {
       type: String,
-      enum: ['Paid', 'Unpaid', 'Cancelled'],
+      enum: ['paid', 'unpaid', 'cancelled'],
       required: true
     },
     statusDelivery: {
       type: String,
-      enum: ['Cancelled', 'Sent', 'Completed', 'In store'],
+      enum: ['cancelled', 'sent', 'completed', 'inStore'],
+      required: true
+    },
+    deliveryOption: {
+      type: String,
+      enum: ['take', 'post', 'curier'],
       required: true
     },
     items: [itemsSchema],
