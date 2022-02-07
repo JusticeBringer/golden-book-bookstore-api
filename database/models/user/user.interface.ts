@@ -15,7 +15,11 @@ export interface IUser {
   email: string;
   password: string;
   isVerifiedEmail: boolean;
+<<<<<<< Updated upstream
   confirmationEmailDateSent?: Date;
+=======
+  confirmationEmailDateSent: Date;
+>>>>>>> Stashed changes
   confirmationEmailDateClicked?: Date;
   registrationMethod: string;
   familyName?: string;

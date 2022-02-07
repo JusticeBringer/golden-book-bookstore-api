@@ -9,6 +9,7 @@ type shippingAddressType = {
 
 type itemType = {
   id: string;
+  _id: string;
   qty: number;
 };
 

@@ -1,25 +1,14 @@
 import express, { Router, Request, Response } from 'express';
-import { IPaymentOrder, IPayment } from '../../../../database/models/payment/payment.interface';
+import { IPayment } from '../../../../database/models/payment/payment.interface';
 import { PaymentModel } from '../../../../database/models/payment/payment.model';
 
 export const paymentsRouter: Router = express.Router();
 
-paymentsRouter.post('/ramburs', async (req: Request, res: Response): Promise<void> => {
+paymentsRouter.post('/offline', async (req: Request, res: Response): Promise<void> => {
   console.log('req.body.payment is', req.body.payment);
 
-  const payment: IPaymentOrder = req.body.payment;
-
-  let parsedPaymentMethod = payment.paymentMethod as string;
-  if (payment.paymentMethod === 'Poștă') {
-    parsedPaymentMethod = 'Post';
-  }
-
   const paymentForModel: IPayment = {
-    userId: payment.userId,
-    status: payment.status,
-    amount: payment.amount,
-    paymentMethod: parsedPaymentMethod,
-    token: payment.token
+    ...req.body.payment
   };
 
   const paymentModel = new PaymentModel(paymentForModel);

@@ -33,7 +33,7 @@ export const OrderSchema = new Schema(
     },
     deliveryOption: {
       type: String,
-      enum: ['take', 'post', 'courier'],
+      enum: ['take', 'post', 'curier'],
       required: true
     },
     items: [itemsSchema],
