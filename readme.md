@@ -54,8 +54,9 @@ Inside `scripts` folder, there is a file called `resetMockedData.ts`. Whenever y
 ## Hosting
 
 API hosted on Heroku [here](https://golden-book-bookstore-api.herokuapp.com/)
+\
 The web app is also hosted on Heroku [here](https://golden-book-bookstore-web.herokuapp.com/)
 
 ## Contributor
 
-- [Me, Gabriel Arghire](https://github.com/JusticeBringer/) 100%
+- [Me - Gabriel Arghire](https://github.com/JusticeBringer/) 100%
