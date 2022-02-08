@@ -1,10 +1,6 @@
 # „Golden Book” Bookstore - API
 
-![Heroku](https://github.com/DenisOH/pyheroku-badge/blob/master/img/deployed.svg)
-\
-[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
-\
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![Heroku](https://github.com/DenisOH/pyheroku-badge/blob/master/img/deployed.svg) [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## How to use (local)
 
