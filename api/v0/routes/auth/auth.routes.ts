@@ -56,8 +56,8 @@ authRouter.get(
       return res.send(
         `<body>
           <div style="padding: 5vw">
-            <p style="font-size:5vw;margin-top:2vh"> Email-ul a fost deja confirmat.</p> 
-            <a style="font-size:5vw;" href="${loginUrl}"> Spre autentificare </a>
+            <p style="font-size:5vw;margin-top:2vh"> The email has already been confirmed!</p> 
+            <a style="font-size:5vw;" href="${loginUrl}"> Go to login page! </a>
           </div> 
         </body>`
       );
@@ -71,9 +71,9 @@ authRouter.get(
     return res.send(
       `<body onload=window.location.href='${loginUrl}'>
         <div style="padding: 5vw">
-          <p style="font-size:5vw;margin-top:2vh"> Email confirmat.</p> 
+          <p style="font-size:5vw;margin-top:2vh"> Email was confirmed.</p> 
         <div style="font-size:4vw;margin-top:2vh">
-          <p> Veți fi redirecționat automat imediat spre autentificare. Dacă nu, apăsați <a href="${loginUrl}"> aici </a> </p>
+          <p> You will be automatically redirected to authentication. If not, click <a href="${loginUrl}"> here </a> </p>
         </div>
         </div> 
       </body>`

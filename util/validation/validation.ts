@@ -109,7 +109,7 @@ export async function sendConfirmationEmail(userId: string, userEmail: string) {
 
   const data = {
     subject: 'Email confirmation',
-    html: `Vă rugăm accesați următorul link pentru confirmarea email-ului: <a href="${confirmationUrl}">${confirmationUrl} </a>`
+    html: `Please click this link for email confirmation: <a href="${confirmationUrl}">${confirmationUrl} </a>`
   };
 
   const mailer = new NodeMailgun();
@@ -119,7 +119,7 @@ export async function sendConfirmationEmail(userId: string, userEmail: string) {
     host: MAILGUN_HOST
   };
   mailer.fromEmail = 'noreply@carteadeaur.games';
-  mailer.fromTitle = 'Libraria Cartea de Aur';
+  mailer.fromTitle = 'Golden Book Bookstore';
   mailer.init();
 
   let errorMail = '';
