@@ -25,7 +25,7 @@ ordersRouter.get('/:id', verifyTokenSecret, async (req: Request, res: Response):
   const orderInDb: OrderDocument = await OrderModel.findOne({ _id: userObjectId });
 
   if (!orderInDb) {
-    res.status(400).send('Nu există o astfel de comandă');
+    res.status(400).send('No order found');
   } else {
     res.status(200).send(orderInDb);
   }
