@@ -23,7 +23,7 @@ export const getUsers: IUser[] = [
 const PR_IOSIF_TRIFA = 'Father Iosif Trifa';
 const TRAIAN_DORZ = 'Traian Dorz';
 const IOAN_MARINI = 'Ioan Marini';
-const PR_VASILE_MIHOC = 'Pr. Vasile Mihoc';
+const PR_VASILE_MIHOC = 'Father Vasile Mihoc';
 const STARE_NOUA = 'New';
 
 const EDITURA_OASTEA_DOMNULUI = 'Editura Oastea Domnului';

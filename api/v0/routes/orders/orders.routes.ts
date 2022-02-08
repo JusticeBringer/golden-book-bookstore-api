@@ -63,11 +63,11 @@ ordersRouter.post('/', async (req: Request, res: Response): Promise<void> => {
     // update books qtys
     await Promise.all(
       orderModel.items.map(async item => {
-        console.log('item', item);
+        // const itemId = item._id;
         const bookById: BookDocument = await BookModel.findOne({ _id: item.id });
         console.log('bookById', bookById);
         await BookModel.updateOne(
-          { _id: item._id },
+          { _id: item.id },
           { $set: { quantity: bookById.quantity - item.qty } }
         );
       })
