@@ -1,6 +1,10 @@
-# Bachelor`s Thesis: „Golden Book” Bookstore - API
+# „Golden Book” Bookstore - API
 
 ![Heroku](https://github.com/DenisOH/pyheroku-badge/blob/master/img/deployed.svg)
+\
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+\
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## How to use (local)
 
@@ -49,7 +53,7 @@ Inside `scripts` folder, there is a file called `resetMockedData.ts`. Whenever y
 
 ## Technologies used
 
-- Node.js, Express, Typescript
+- Node.js, Express, MongoDB, Typescript
 
 ## Hosting
 
@@ -60,3 +64,7 @@ The web app is also hosted on Heroku [here](https://golden-book-bookstore-web.he
 ## Contributor
 
 - [Me - Gabriel Arghire](https://github.com/JusticeBringer/) 100%
+
+## License
+
+License of this project is `GNU GPL v3`
